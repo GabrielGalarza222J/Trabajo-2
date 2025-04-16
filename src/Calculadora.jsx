@@ -1,5 +1,39 @@
 import React, { useState } from 'react';
 
+function PantallaResultado({ resultado }) {
+    return (
+        <div>
+            <h2>Resultado: {resultado !== null ? resultado : ''}</h2>
+        </div>
+    );
+}
+
+function EntradaValores({ valor1, valor2, setValor1, setValor2, operacion, setOperacion }) {
+    return (
+        <div>
+            <input
+                type="text"
+                value={valor1}
+                onChange={(e) => setValor1(e.target.value)}
+                placeholder="Valor 1"
+            />
+            <input
+                type="text"
+                value={valor2}
+                onChange={(e) => setValor2(e.target.value)}
+                placeholder="Valor 2"
+            />
+            <select value={operacion} onChange={(e) => setOperacion(e.target.value)}>
+                <option value="+">Suma</option>
+                <option value="-">Resta</option>
+                <option value="*">Multiplicación</option>
+                <option value="/">División</option>
+            </select>
+        </div>
+    );
+}
+
+
 function Calculadora() {
     const [valor1, setValor1] = useState(0);
     const [valor2, setValor2] = useState(0);
@@ -55,53 +89,31 @@ function Calculadora() {
     };
 
     return (
+
+    
         <div>
             <h1>Calculadora</h1>
-            <div>
-                <input
-                    type="text"
-                    value={valor1}
-                    onChange={(e) => setValor1(e.target.value)}
-                />
-                <input
-                    type="text"
-                    value={valor2}
-                    onChange={(e) => setValor2(e.target.value)}
-                />
-            </div>
-            <div>
-                <select
-                    value={operacion}
-                    onChange={(e) => setOperacion(e.target.value)}
-                >
-                    <option value="+">Suma</option>
-                    <option value="-">Resta</option>
-                    <option value="*">Multiplicación</option>
-                    <option value="/">División</option>
-                </select>
-            </div>
-            <button onClick={calcular} style={{ margin: '10px' }}>Calcular</button>
+
+            <EntradaValores
+                valor1={valor1}
+                valor2={valor2}
+                setValor1={setValor1}
+                setValor2={setValor2}
+                operacion={operacion}
+                setOperacion={setOperacion}
+            />
+
+            <button onClick={calcular}>Calcular</button>
+
+            <PantallaResultado resultado={resultado} />
 
             <div>
-                <h2>Resultado: {resultado !== null ? resultado : ''}</h2>
-            </div>
-
-            <div>
-                <button onClick={almacenarMemoria} style={{ margin: '10px' }}>
-                    Almacenar en memoria
-                </button>
-                <div>
-                    <button onClick={() => restaurarMemoria('valor1')} style={{ margin: '10px' }}>
-                        Restaurar memoria en Valor 1
-                    </button>
-                    <button onClick={() => restaurarMemoria('valor2')} style={{ margin: '10px' }}>
-                        Restaurar memoria en Valor 2
-                    </button>
-                </div>
+                <button onClick={almacenarMemoria}>Almacenar en memoria</button>
+                <button onClick={() => restaurarMemoria('valor1')}>Restaurar en Valor 1</button>
+                <button onClick={() => restaurarMemoria('valor2')}>Restaurar en Valor 2</button>
             </div>
         </div>
     );
-    
 }
 
 export default Calculadora;
